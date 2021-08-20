@@ -6,7 +6,7 @@
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 17:03:56 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/20 17:06:41 by emgarcia         ###   ########.fr       */
+/*   Updated: 2021/08/20 19:29:08 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,14 @@ char	*ft_strjoinchar(char const *s1, char const c)
 	final[i++] = c;
 	final[i] = '\0';
 	return (final);
+}
+
+char	*ft_segure_join(char *buf, char aux)
+{
+	char	*aux_buf;
+
+	aux_buf = buf;
+	buf = ft_strjoinchar(buf, aux);
+	free(aux_buf);
+	return (buf);
 }
