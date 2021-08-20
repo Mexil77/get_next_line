@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 15:06:39 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/20 17:00:53 by emgarcia         ###   ########.fr       */
+/*   Created: 2021/08/20 17:00:14 by emgarcia          #+#    #+#             */
+/*   Updated: 2021/08/20 17:03:36 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+
+char	*ft_segure_join(char *buf, char aux)
+{
+	char	*aux_buf;
+
+	aux_buf = buf;
+	buf = ft_strjoinchar(buf, aux);
+	free(aux_buf);
+	return (buf);
+}
 
 char	*get_next_line(int fd)
 {
