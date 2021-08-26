@@ -6,37 +6,84 @@
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 17:00:14 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/20 19:28:45 by emgarcia         ###   ########.fr       */
+/*   Updated: 2021/08/26 19:55:28 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+void	ft_bzero(void *s)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < (BUFFER_SIZE + 1))
+		((char *)s)[i] = '\0';
+}
+
+char	*ft_dropchar(char *str)
+{
+	size_t	i;
+	char	*drop;
+
+	if (!str)
+		return (NULL);
+	drop = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!drop)
+		return (NULL);
+	i = -1;
+	while (str[++i])
+		drop[i] = str[i];
+	drop[i] = '\0';
+	return (drop);
+}
+
+char	*ft_cutapend(int fd, ssize_t val, char *buf, char *line)
+{
+	char	*aux;
+	char	*tmp;
+
+	while (val == BUFFER_SIZE && !ft_findchar(buf, '\n'))
+	{
+		aux = line;
+		line = ft_strjoin(line, buf);
+		free(aux);
+		ft_bzero(buf);
+		val = read(fd, buf, BUFFER_SIZE);
+	}
+	aux = line;
+	tmp = ft_cutstr(buf);
+	line = ft_strjoin(line, tmp);
+	free(tmp);
+	free(aux);
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
-	char	*buf;
-	char	aux;
-	ssize_t	val;
+	static char	*buf = 0;
+	char		*line;
+	ssize_t		val;
 
 	if (fd == -1)
 		return (NULL);
-	buf = ft_calloczero(sizeof(char), (BUFFER_SIZE + 1));
 	if (!buf)
-		return (NULL);
-	val = read(fd, &aux, 1);
-	if (val <= 0)
 	{
+		buf = malloc((sizeof(char) * (BUFFER_SIZE + 1)));
+		if (!buf)
+			return (NULL);
+	}
+	if (ft_findchar(buf, '\n'))
+		return (ft_cutstr(buf));
+	line = ft_dropchar(buf);
+	ft_bzero(buf);
+	val = read(fd, buf, BUFFER_SIZE);
+	if (val <= 0 && !ft_strlen(line))
+	{
+		free(line);
 		free(buf);
+		buf = 0;
 		return (NULL);
 	}
-	while (val > 0 && aux != '\n')
-	{
-		buf = ft_segure_join(buf, aux);
-		val = read(fd, &aux, 1);
-	}
-	if (aux == '\n')
-	{
-		buf = ft_segure_join(buf, aux);
-	}
-	return (buf);
+	return (ft_cutapend(fd, val, buf, line));
 }

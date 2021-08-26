@@ -6,7 +6,7 @@
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 17:02:27 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/20 19:28:52 by emgarcia         ###   ########.fr       */
+/*   Updated: 2021/08/26 18:03:43 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 # include <sys/types.h>
 
 char	*get_next_line(int fd);
-void	*ft_calloczero(size_t count, size_t size);
+void	ft_bzero(void *s);
+char	*ft_dropchar(char *str);
 size_t	ft_strlen(const char *s);
-char	*ft_strjoinchar(char const *s1, char const c);
-char	*ft_segure_join(char *buf, char aux);
+size_t	ft_findchar(char *str, char c);
+size_t	ft_countcut(char *str);
+char	*ft_cutstr(char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_cutapend(int fd, ssize_t val, char *buf, char *line);
 
 #endif

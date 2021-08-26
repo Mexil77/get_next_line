@@ -6,62 +6,103 @@
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 15:19:16 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/20 17:01:00 by emgarcia         ###   ########.fr       */
+/*   Updated: 2021/08/26 17:09:04 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloczero(size_t count, size_t size)
-{
-	void	*final;
-	size_t	i;
-
-	i = -1;
-	final = malloc(count * size);
-	if (final == NULL)
-		return (final);
-	while (++i < size)
-		((char *) final)[i] = '\0';
-	return (final);
-}
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strjoinchar(char const *s1, char const c)
+size_t	ft_findchar(char *str, char c)
 {
-	size_t	s1_len;
 	size_t	i;
-	char	*final;
 
-	if (!s1 || !c)
-		return (NULL);
 	i = -1;
-	s1_len = ft_strlen(s1);
-	final = (char *)malloc(sizeof(char) * (s1_len + 2));
-	if (final == NULL)
-		return (NULL);
-	while (s1[++i] != '\0')
-		final[i] = s1[i];
-	final[i++] = c;
-	final[i] = '\0';
-	return (final);
+	if (!str)
+		return (0);
+	while (str[++i])
+		if (str[i] == c)
+			return (1);
+	return (0);
 }
 
-char	*ft_segure_join(char *buf, char aux)
+size_t	ft_countcut(char *str)
 {
-	char	*aux_buf;
+	size_t	i;
+	size_t	before;
 
-	aux_buf = buf;
-	buf = ft_strjoinchar(buf, aux);
-	free(aux_buf);
-	return (buf);
+	if (!str)
+		return (0);
+	i = -1;
+	before = 1;
+	while (str[++i] && before)
+	{
+		if (str[i] == '\n')
+			before--;
+	}
+	return (i);
+}
+
+char	*ft_cutstr(char *str)
+{
+	char	*cut;
+	size_t	sizecut;
+	size_t	i;
+
+	cut = malloc(sizeof(char) * (ft_countcut(str) + 1));
+	if (!cut)
+		return (NULL);
+	i = -1;
+	while (str[++i])
+		if (i < ft_countcut(str))
+			cut[i] = str[i];
+	cut[ft_countcut(str)] = '\0';
+	sizecut = ft_countcut(str);
+	i = 0;
+	while (str[sizecut + i])
+	{
+		str[i] = str[sizecut + i];
+		i++;
+	}
+	while (str[i])
+		str[i++] = '\0';
+	return (cut);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	i;
+	size_t	j;
+	char	*final;
+
+	if (!s1 && !s2)
+		return (NULL);
+	i = -1;
+	j = -1;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	final = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (final == NULL)
+		return (NULL);
+	if (!s1)
+		i = 0;
+	while (s1 && s1[++i] != '\0')
+		final[i] = s1[i];
+	while (s2[++j] != '\0')
+		final[i + j] = s2[j];
+	final[i + j] = '\0';
+	return (final);
 }
