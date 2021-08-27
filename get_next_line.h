@@ -6,7 +6,7 @@
 /*   By: emgarcia <emgarcia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 15:14:11 by emgarcia          #+#    #+#             */
-/*   Updated: 2021/08/27 13:21:22 by emgarcia         ###   ########.fr       */
+/*   Updated: 2021/08/27 13:59:12 by emgarcia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <stdlib.h>
 # include <sys/types.h>
 
-# define BUFFER_SIZE = 1;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1;
+# endif
 
 char	*get_next_line(int fd);
 void	ft_bzero(void *s);
