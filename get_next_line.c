@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *s)
+void	ft_bzerognl(void *s)
 {
 	size_t	i;
 
@@ -48,7 +48,7 @@ char	*ft_cutapend(int fd, ssize_t val, char *buf, char *line)
 		aux = line;
 		line = ft_strjoin(line, buf);
 		free(aux);
-		ft_bzero(buf);
+		ft_bzerognl(buf);
 		val = read(fd, buf, BUFFER_SIZE);
 	}
 	aux = line;
@@ -76,7 +76,7 @@ char	*get_next_line(int fd)
 		if (!buf)
 			return (NULL);
 	}
-	ft_bzero(buf);
+	ft_bzerognl(buf);
 	val = read(fd, buf, BUFFER_SIZE);
 	if (val <= 0 && !ft_strlen(line))
 	{

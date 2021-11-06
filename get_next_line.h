@@ -23,7 +23,7 @@
 # endif
 
 char	*get_next_line(int fd);
-void	ft_bzero(void *s);
+void	ft_bzerognl(void *s);
 char	*ft_dropchar(char *str);
 size_t	ft_strlen(const char *s);
 size_t	ft_findchar(char *str, char c);
