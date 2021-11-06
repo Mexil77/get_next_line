@@ -82,8 +82,6 @@ char	*ft_cutstr(char *str)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	s1_len;
-	size_t	s2_len;
 	size_t	i;
 	size_t	j;
 	char	*final;
@@ -92,16 +90,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = -1;
 	j = -1;
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	final = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	final = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (final == NULL)
 		return (NULL);
 	if (!s1)
 		i = 0;
 	while (s1 && s1[++i] != '\0')
 		final[i] = s1[i];
-	while (s2[++j] != '\0')
+	if (!s2)
+		j = 0;
+	while (s2 && s2[++j] != '\0')
 		final[i + j] = s2[j];
 	final[i + j] = '\0';
 	return (final);
